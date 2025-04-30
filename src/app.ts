@@ -1,12 +1,19 @@
 // const express = require('express');
 import  express  from "express";
+import webRouter from "./routes/web"
+require('dotenv').config();
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT;
 
-app.get("/",function(req,res){
-    res.send('hello1231')
-})
+//config view engine
+app.set('view engine', 'ejs')
+app.set('views', __dirname + '/views')
+
+//config router
+webRouter(app)
+//config static file: image/css/js
+app.use(express.static('public'))
 
 app.listen(PORT, function () {
-  console.log("my app");
+  console.log("my app",`${process.env.PORT}`);
 });
