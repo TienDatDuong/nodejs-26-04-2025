@@ -1,5 +1,5 @@
 import express,{Express} from 'express'
-import { getHomePage ,getCreateUserPage, postCreayteUser} from '../controllers/user.controler'
+import { getHomePage ,getCreateUserPage, postCreateUser} from '../controllers/user.controler'
 const router = express.Router()
 
 const webRouter = (app: Express) => {
@@ -7,7 +7,7 @@ const webRouter = (app: Express) => {
 
     app.get("/create-user",getCreateUserPage)
 
-    app.post("/handle-create-user", postCreayteUser)
+    app.post("/handle-create-user", postCreateUser)
 
     app.use("/",router)
 }

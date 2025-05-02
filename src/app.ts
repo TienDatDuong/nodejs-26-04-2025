@@ -9,10 +9,15 @@ const PORT = process.env.PORT;
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
 
+//config req.body
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
+
+//config static file: image/css/js
+app.use(express.static('public'));
+
 //config router
 webRouter(app)
-//config static file: image/css/js
-app.use(express.static('public'))
 
 app.listen(PORT, function () {
   console.log("my app",`${process.env.PORT}`);
