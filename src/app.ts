@@ -23,5 +23,4 @@ webRouter(app)
 getConnection();
 
 app.listen(PORT, function () {
-  console.log("my app",`${process.env.PORT}`);
 });
