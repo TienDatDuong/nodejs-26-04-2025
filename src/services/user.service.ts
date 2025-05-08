@@ -17,55 +17,34 @@ const handleCreateUser = async (
 }
 
 const getAllUsers = async () => {
-    const connection = await getConnection();
-       // A simple SELECT query
-    try {
-    const [results, fields] = await connection.query(
-        'SELECT * FROM `user`'
-    );
-    return results; // rows returned by server
-    } catch (err) {``
-    return [];
-    }
+    const users = await prisma.user.findMany()
+    return users;
 }
 
 const handleDeleteUser = async (id: string) => {
-    const connection = await getConnection();
-    try {
-    const sql = 'DELETE FROM `user` WHERE `id` = ? LIMIT 1';
-    const values = [id];
-
-    const [result, fields] = await connection.query(sql,values);
-    return result; // rows returned by server
-    } catch (err) {
-    console.log(err);
-    return [];
-    }
+   const result = await prisma.user.delete({
+        where: { id: +id }
+    })
+    return result;
 }
 
 const getUserById = async (id: string) => {
-    const connection = await getConnection();
-    try {
-    const sql = 'SELECT * FROM `user` WHERE `id` = ?';
-    const values = [id];
-    const [result, fields] = await connection.query(sql,values);
-    return result[0]; // result returned by server
-    } catch (err) {
-    return [];
-    }
+    const user = await prisma.user.findUnique({
+        where: { id: +id }
+    })
+    return user;
 };
 
 const upDateUserById = async (id: string, email: string, address: string, fullName: string) => {
-    const connection = await getConnection();
-    try {
-        const sql = 'UPDATE `user` SET `email` = ?, `address` = ?, `fullName` = ? WHERE `id` = ?';
-        const values = [email, address, fullName, id];
-        const [result, fields] = await connection.query(sql, values);
-        return result; // rows returned by server
-    } catch (err) {
-        console.log(err);
-        return [];
-    }
+    const upDatedUser = await prisma.user.update({
+        where: { id: +id },
+        data: {
+            email: email,
+            address: address,
+            name: fullName
+        }   
+    })
+    return upDatedUser;
 };
 
 
