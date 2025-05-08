@@ -1,19 +1,24 @@
-import { prisma } from "config/clinet";
-import getConnection from "../config/db"
-import { PrismaClient, Prisma } from '@prisma/client'
+import getConnection from "../db"
 
 const handleCreateUser = async (
     fullName: string,
     email: string,
     address: string) => {
         //insert into database
-        await prisma.user.create({
-            data: {
-                name: fullName,
-                email: email,
-                address: address
-            }
-        });
+        const connection = await getConnection();
+        try {
+        const sql = 'INSERT INTO `user`(`fullName`, `email`,`address`) VALUES (?, ?, ?)';
+        const values = [fullName, email, address];
+
+        const [result, fields] = await connection.execute(sql, values);
+        return result; // rows returned by server
+        } catch (err) {
+            console.log(err);
+        return [];
+        }
+        
+        
+        //return result
 }
 
 const getAllUsers = async () => {

@@ -1,7 +1,7 @@
 // const express = require('express');
 import  express  from "express";
 import webRouter from "./routes/web"
-import getConnection from "./db";
+import getConnection from "./config/db";
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT;
